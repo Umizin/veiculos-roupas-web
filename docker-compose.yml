@@ -1,0 +1,48 @@
+services:
+
+  web:
+    build:
+      context: .
+      args:
+        VITE_API_URL: /api
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: 8080
+      API_PROXY_URL: http://api:3000
+    depends_on:
+      - api
+
+  api:
+    build: ../trabalho_p2_fabricio
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      NODE_ENV: production
+      JWT_SECRET: ${JWT_SECRET:-chave_forte_troque_em_producao_com_32_chars}
+      JWT_EXPIRA_EM: 8h
+      MONGO_URI: mongodb://mongo:27017/veiculos_roupas
+      POSTGRES_URI: postgresql://postgres:postgres@postgres:5432/veiculos_roupas
+      CORS_ORIGEM: "*"
+    depends_on:
+      - mongo
+      - postgres
+
+  mongo:
+    image: mongo:7
+    volumes:
+      - mongo_data:/data/db
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: veiculos_roupas
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  mongo_data:
+  postgres_data:
