@@ -2,7 +2,7 @@
 
 Interface React com Tailwind CSS para consumir a API de cadastro.
 
-Repositorio da API: `veiculos-roupas-api` (pasta `../trabalho_p2_fabricio`)
+Repositorio da API: [veiculos-roupas-api](https://github.com/Umizin/gestao-veiculos-roupas-api)
 
 ## Requisitos
 
